@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-main>
-      <h1>人员信息导入</h1>
+      <h1>人社局人员信息导入</h1>
       <!--      表单-->
       <el-form ref="form" :model="form" label-width="100px">
         <el-form-item label="下载模板：">
@@ -165,7 +165,7 @@ export default {
       progressNum: 0,
       proNum: null,
       stepsNum: 0,
-      actionHost: global.host + "/importExcel",
+      actionHost: global.host + "rsj/importExcel",
       msg: "",
       mytoken: null,
     }
@@ -201,11 +201,11 @@ export default {
             return
           }
           if (that.fileSize > 4000000) {
-            that.progressNum += 2.5;
+            that.progressNum += 0.4;
           } else if (that.fileSize > 700000) {
-            that.progressNum += 5;
+            that.progressNum += 1;
           } else {
-            that.progressNum += 30;
+            that.progressNum += 20;
           }
           that.progressNum = Math.round(that.progressNum * 100) / 100;
           if (that.progressNum >= 98) {
@@ -293,7 +293,7 @@ export default {
       const a = document.createElement('a')
       a.setAttribute('download', name)
       a.setAttribute('target', '_blank')
-      a.setAttribute('href', global.host + "/downloadLog")
+      a.setAttribute('href', global.host + "rsj/downloadLog")
       // a.setAttribute('href', global.fileaddr + "/log/lab.log")
       a.click()
     },
@@ -302,7 +302,7 @@ export default {
       const a = document.createElement('a')
       a.setAttribute('download', name)
       a.setAttribute('target', '_blank')
-      a.setAttribute('href', global.host + "/downloadExcel")
+      a.setAttribute('href', global.host + "rsj/downloadExcel")
       // a.setAttribute('href', global.fileaddr + "/人员导入模板.xls")
       a.click()
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-main>
-      <h1>退役人员信息导入</h1>
+      <h1>残联人员信息导入</h1>
       <!--      表单-->
       <el-form ref="form" :model="form" label-width="100px">
         <el-form-item label="下载模板：">
@@ -165,7 +165,7 @@ export default {
       progressNum: 0,
       proNum: null,
       stepsNum: 0,
-      actionHost: global.host + "ty/importExcel",
+      actionHost: global.host + "cl/importExcel",
       msg: "",
       mytoken: null,
     }
@@ -293,7 +293,7 @@ export default {
       const a = document.createElement('a')
       a.setAttribute('download', name)
       a.setAttribute('target', '_blank')
-      a.setAttribute('href', global.host + "ty/downloadLog")
+      a.setAttribute('href', global.host + "cl/downloadLog")
       // a.setAttribute('href', global.fileaddr + "/log/lab.log")
       a.click()
     },
@@ -302,7 +302,7 @@ export default {
       const a = document.createElement('a')
       a.setAttribute('download', name)
       a.setAttribute('target', '_blank')
-      a.setAttribute('href', global.host + "ty/downloadExcel")
+      a.setAttribute('href', global.host + "cl/downloadExcel")
       // a.setAttribute('href', global.fileaddr + "/人员导入模板.xls")
       a.click()
     },
