@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-main>
-      <h1>残联人员信息导入</h1>
+      <h1>{{ type }}人员信息导入</h1>
       <!--      表单-->
       <el-form ref="form" :model="form" label-width="100px">
         <el-form-item label="下载模板：">
@@ -30,21 +30,21 @@
         </el-form-item>
         <el-form-item label="重复验证字段：" label-width="200">
           <el-switch
-              :disabled="false"
+              :disabled="true"
               v-model="form.checkField1"
               active-text="身份证"
           >
           </el-switch>
           ---------
           <el-switch
-              :disabled="false"
+              :disabled="true"
               v-model="form.checkField2"
               active-text="所属年份"
           >
           </el-switch>
           ---------
           <el-switch
-              :disabled="false"
+              :disabled="true"
               v-model="form.checkField3"
               active-text="所属月份"
           >
@@ -68,7 +68,8 @@
           >
           </el-switch>
           <el-link type="success" style="margin-left: 30px" v-show="LogShow" @click="downloadLog()">点击·下载导入日志</el-link>
-          <el-link type="danger" @click="openImportRes" style="margin-left: 30px" v-show="importFlag">点击·查看导入结果</el-link>
+          <el-link type="danger" @click="openImportRes" style="margin-left: 30px" v-show="importFlag">点击·查看导入结果
+          </el-link>
           <span style="color: red;margin-left: 30px" v-show="importFlag2">本次导入日志数据过大，请下载查看</span>
         </el-form-item>
 
@@ -124,6 +125,8 @@ import axios from 'axios'
 import service from "@/utils/request";
 import global from "@/common/Global";
 import Cookies from 'js-cookie'
+import Vue from "vue";
+
 export default {
   name: 'importPersonInfo',
   data() {
@@ -143,6 +146,8 @@ export default {
         label: '极速导入'
       }],
       importOrder: null,
+      type: "",
+      addr: "",
       LogShow: false,
       form: {
         checkField1: true,
@@ -165,7 +170,7 @@ export default {
       progressNum: 0,
       proNum: null,
       stepsNum: 0,
-      actionHost: global.host + "cl/importExcel",
+      actionHost: "",
       msg: "",
       mytoken: null,
     }
@@ -173,6 +178,13 @@ export default {
   mounted() {
   },
   created() {
+    let id = this.$route.query.type
+    let addr = this.$route.query.addr
+    console.log(addr)
+    this.type = id
+    this.addr = addr
+    this.actionHost = global.host + addr + "/importExcel"
+    console.log(this.actionHost)
     this.form.inputType = this.inputOptions[0].value;
     var token = Cookies.get("access_token");
     this.mytoken = {Authorization: token}
@@ -197,7 +209,7 @@ export default {
         this.progressVisible = true
         const that = this;
         that.proNum = setInterval(function () {
-          if (that.progressNum >= 100){
+          if (that.progressNum >= 100) {
             return
           }
           if (that.fileSize > 4000000) {
@@ -290,10 +302,11 @@ export default {
     },
     //下载导入日志文件
     downloadLog() {
+
       const a = document.createElement('a')
       a.setAttribute('download', name)
       a.setAttribute('target', '_blank')
-      a.setAttribute('href', global.host + "cl/downloadLog")
+      a.setAttribute('href', global.host + "/" + this.addr + "/downloadLog")
       // a.setAttribute('href', global.fileaddr + "/log/lab.log")
       a.click()
     },
@@ -302,7 +315,7 @@ export default {
       const a = document.createElement('a')
       a.setAttribute('download', name)
       a.setAttribute('target', '_blank')
-      a.setAttribute('href', global.host + "cl/downloadExcel")
+      a.setAttribute('href', global.host + "/" + this.addr + "/downloadExcel")
       // a.setAttribute('href', global.fileaddr + "/人员导入模板.xls")
       a.click()
     },

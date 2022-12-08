@@ -124,6 +124,7 @@ import axios from 'axios'
 import service from "@/utils/request";
 import global from "@/common/Global";
 import Cookies from 'js-cookie'
+import Vue from "vue";
 export default {
   name: 'importPersonInfo',
   data() {
@@ -290,6 +291,7 @@ export default {
     },
     //下载导入日志文件
     downloadLog() {
+
       const a = document.createElement('a')
       a.setAttribute('download', name)
       a.setAttribute('target', '_blank')
