@@ -180,11 +180,9 @@ export default {
   created() {
     let id = this.$route.query.type
     let addr = this.$route.query.addr
-    console.log(addr)
     this.type = id
     this.addr = addr
     this.actionHost = global.host + addr + "/importExcel"
-    console.log(this.actionHost)
     this.form.inputType = this.inputOptions[0].value;
     var token = Cookies.get("access_token");
     this.mytoken = {Authorization: token}
@@ -213,11 +211,11 @@ export default {
             return
           }
           if (that.fileSize > 4000000) {
-            that.progressNum += 0.4;
+            that.progressNum += 0.3;
           } else if (that.fileSize > 700000) {
-            that.progressNum += 1;
+            that.progressNum += 0.5;
           } else {
-            that.progressNum += 20;
+            that.progressNum += 8;
           }
           that.progressNum = Math.round(that.progressNum * 100) / 100;
           if (that.progressNum >= 98) {
@@ -230,6 +228,8 @@ export default {
             that.stepsNum = 1
           }
         }, 1000);
+
+
         this.$refs.upload.submit();
       }
     },
@@ -240,6 +240,7 @@ export default {
           message: '该文件为空',
           type: 'warning'
         })
+
         return false
       }
       this.fileSize = file.size
@@ -328,7 +329,6 @@ export default {
     //上传中函数
     uploadProgress(event, file, fileList) {
       this.progressVisible = true
-
     },
   }
 }
